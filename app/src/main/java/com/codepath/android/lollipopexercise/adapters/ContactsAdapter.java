@@ -2,6 +2,8 @@ package com.codepath.android.lollipopexercise.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcel;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +13,13 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.android.lollipopexercise.R;
+import com.codepath.android.lollipopexercise.activities.DetailsActivity;
 import com.codepath.android.lollipopexercise.models.Contact;
 
 import java.util.List;
 
 // Provide the underlying view for an individual list item.
+
 public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
     private Activity mContext;
     private List<Contact> mContacts;
@@ -32,6 +36,7 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
+
         return new VH(itemView, mContext);
     }
 
@@ -71,6 +76,11 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.VH> {
                     if (contact != null) {
                         // Fire an intent when a contact is selected
                         // Pass contact object in the bundle and populate details activity.
+                        Parcel parcel = new Parcel(ContactsAdapter.this, DetailsActivity.class)
+                        // extra_contact ensures key is used to extract object
+
+                        intent.putExtra("contact_key", DetailsActivity.EXTRA_CONTACT);
+                        startActivity(intent);
                     }
                 }
             });
